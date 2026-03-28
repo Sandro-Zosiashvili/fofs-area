@@ -48,7 +48,7 @@ export default function ProductCard({
 
       <div className={styles.details}>
         <div>
-          <h3>{name}</h3>
+          <h3 className={styles.name}>{name}</h3>
           <p className={styles.price}>{price}</p>
         </div>
 

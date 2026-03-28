@@ -18,7 +18,9 @@ export default function Hero({ heading, subheading }: HeroProps) {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <p className={styles.eyebrow}>Boutique Luxury Footwear</p>
-        <h1 id="hero-title">{heading}</h1>
+        <h1 id="hero-title" className={styles.title}>
+          {heading}
+        </h1>
         <p className={styles.subheading}>{subheading}</p>
       </motion.div>
     </section>
