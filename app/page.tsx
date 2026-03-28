@@ -9,6 +9,7 @@ import styles from "./page.module.scss";
 type ProductTone = "charcoal" | "bone" | "sage" | "taupe" | "espresso";
 
 interface ProductEntry {
+  id: string;
   name: string;
   price: string;
   imageSrc: string;
@@ -19,6 +20,7 @@ interface ProductEntry {
 
 const featuredProducts: ProductEntry[] = [
   {
+    id: "seraphina-loafer",
     name: "Seraphina Loafer",
     price: "€690",
     imageSrc:
@@ -28,6 +30,7 @@ const featuredProducts: ProductEntry[] = [
     sizes: [37, 38, 39, 40],
   },
   {
+    id: "aureline-mule",
     name: "Aureline Mule",
     price: "€740",
     imageSrc:
@@ -37,6 +40,7 @@ const featuredProducts: ProductEntry[] = [
     sizes: [36, 37, 38, 39],
   },
   {
+    id: "nocturne-derby",
     name: "Nocturne Derby",
     price: "€810",
     imageSrc:
@@ -46,6 +50,7 @@ const featuredProducts: ProductEntry[] = [
     sizes: [40, 41, 42, 43],
   },
   {
+    id: "lune-court",
     name: "Lune Court",
     price: "€760",
     imageSrc:
@@ -96,7 +101,7 @@ export default function Home() {
             animate="visible"
           >
             {featuredProducts.map((product) => (
-              <motion.div key={product.name} variants={itemVariants} transition={{ duration: 0.45, ease: "easeOut" }}>
+              <motion.div key={product.id} variants={itemVariants} transition={{ duration: 0.45, ease: "easeOut" }}>
                 <ProductCard
                   name={product.name}
                   price={product.price}

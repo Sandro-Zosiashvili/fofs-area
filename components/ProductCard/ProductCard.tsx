@@ -40,7 +40,13 @@ export default function ProductCard({
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
       <div className={styles.imageWrap}>
-        <Image src={imageSrc} alt={imageAlt} fill className={styles.image} sizes="(min-width: 1024px) 25vw, 50vw" />
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          className={styles.image}
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+        />
         <button type="button" className={styles.saveButton} onClick={onSave}>
           Save
         </button>
@@ -55,7 +61,12 @@ export default function ProductCard({
         {colorSwatches?.length ? (
           <div className={styles.swatches} aria-label={`${name} available colors`}>
             {colorSwatches.map((swatch) => (
-              <span key={`${name}-${swatch}`} className={`${styles.swatch} ${swatchClassMap[swatch]}`} aria-hidden="true" />
+              <span
+                key={`${name}-${swatch}`}
+                className={`${styles.swatch} ${swatchClassMap[swatch]}`}
+                aria-label={`${swatch} color option`}
+                role="img"
+              />
             ))}
           </div>
         ) : null}
@@ -66,7 +77,12 @@ export default function ProductCard({
           <p className={styles.sizeLabel}>EU Sizes</p>
           <div className={styles.sizeOptions}>
             {availableSizes.map((size) => (
-              <button key={`${name}-size-${size}`} type="button" className={styles.sizeOption}>
+              <button
+                key={`${name}-size-${size}`}
+                type="button"
+                className={styles.sizeOption}
+                aria-label={`Select size ${size}`}
+              >
                 {size}
               </button>
             ))}
