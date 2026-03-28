@@ -1,0 +1,51 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(61, 79, 73, 0.08), transparent 38%),
+    $color-bone-50;
+}
+
+.main {
+  @include container;
+  @include flex-column(flex-start, stretch, $space-4xl);
+  padding-bottom: $space-4xl;
+}
+
+.collectionSection {
+  @include flex-column(flex-start, stretch, $space-xl);
+}
+
+.sectionHeader {
+  @include flex-column(flex-start, flex-start, $space-xs);
+
+  p {
+    font-size: 0.78rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: $color-sage-800;
+  }
+
+  h2 {
+    font-family: $font-heading;
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    font-weight: 500;
+    color: $color-charcoal-950;
+  }
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: $space-lg;
+
+  @include media-up(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include media-up(xl) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
