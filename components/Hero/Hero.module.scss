@@ -1,0 +1,41 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.hero {
+  @include container;
+  position: relative;
+  margin-top: $space-2xl;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, $color-hero-gradient-start, $color-hero-gradient-end),
+    $color-bone-100;
+  box-shadow: $shadow-soft;
+}
+
+.content {
+  @include flex-column(flex-start, flex-start, $space-lg);
+  padding: clamp(2.5rem, 4vw, 4.5rem);
+  max-width: 48rem;
+}
+
+.eyebrow {
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-sage-800;
+}
+
+.title {
+  font-family: $font-heading;
+  font-size: clamp(2.25rem, 4.4vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.05;
+  color: $color-charcoal-950;
+}
+
+.subheading {
+  max-width: 34rem;
+  color: $color-muted;
+  font-size: clamp(1rem, 1.7vw, 1.15rem);
+}

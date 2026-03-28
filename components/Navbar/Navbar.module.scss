@@ -1,0 +1,72 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(24, 27, 26, 0.08);
+  background-color: rgba(245, 242, 235, 0.9);
+}
+
+.inner {
+  @include container;
+  @include flex-row(space-between, center, $space-lg);
+  min-height: 5rem;
+}
+
+.brand {
+  font-family: $font-heading;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  letter-spacing: 0.12em;
+  color: $color-charcoal-950;
+}
+
+.navigation {
+  @include flex-row(center, center, $space-xl);
+  display: none;
+  font-size: 0.92rem;
+  color: $color-muted;
+
+  a {
+    transition: color 220ms ease;
+
+    &:hover,
+    &:focus-visible {
+      color: $color-charcoal-900;
+    }
+  }
+
+  @include media-up(md) {
+    display: flex;
+  }
+}
+
+.cartButton {
+  @include flex-row(center, center, $space-sm);
+  border: 0;
+  border-radius: $radius-md;
+  background-color: transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: $color-charcoal-900;
+  padding: $space-xs $space-sm;
+  transition: background-color 220ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: rgba(47, 61, 56, 0.08);
+  }
+}
+
+.counter {
+  @include flex-row(center, center);
+  min-width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 999px;
+  background-color: $color-sage-900;
+  color: $color-bone-50;
+  font-size: 0.74rem;
+  line-height: 1;
+}
