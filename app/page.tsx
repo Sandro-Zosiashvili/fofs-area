@@ -234,6 +234,7 @@ export default function Home() {
     sort: "featured",
   });
 
+  // priceBounds is module-level and static
   const activeFiltersCount = useMemo(() => {
     const counts = [
       filters.query ? 1 : 0,
@@ -270,7 +271,8 @@ export default function Home() {
     return matches.sort(sorters[filters.sort]);
   }, [filters]);
 
-  const updateFilters = (next: Partial<FilterState>) => setFilters((prev) => ({ ...prev, ...next }));
+  const updateFilters = <K extends keyof FilterState>(key: K, value: FilterState[K]) =>
+    setFilters((prev) => ({ ...prev, [key]: value }));
   const resetFilters = () =>
     setFilters({
       query: "",
@@ -372,7 +374,7 @@ export default function Home() {
                 <motion.div
                   key={product.id}
                   variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
-                  layout
+                  layout="position"
                   transition={{ duration: 0.32, ease: "easeOut" }}
                 >
                   <ProductCard

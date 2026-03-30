@@ -60,7 +60,6 @@ export default function ProductCard({
           fill
           className={styles.image}
           sizes="(min-width: 1280px) 22vw, (min-width: 1024px) 28vw, (min-width: 768px) 45vw, 100vw"
-          priority
         />
         {badge ? <span className={styles.badge}>{badge}</span> : null}
         <div className={styles.topActions}>

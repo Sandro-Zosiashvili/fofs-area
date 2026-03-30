@@ -23,12 +23,14 @@ export interface FilterState {
 
 interface FilterPanelProps {
   filters: FilterState;
-  onUpdate: (next: Partial<FilterState>) => void;
+  onUpdate: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
   onReset: () => void;
   activeFiltersCount: number;
   priceBounds: { min: number; max: number };
   colorOptions: { id: SwatchTone; label: string }[];
 }
+
+type ArrayFilterKey = "categories" | "materials" | "tones" | "styles" | "heelHeights";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -61,13 +63,15 @@ export default function FilterPanel({
     [filters, priceBounds.max],
   );
 
-  const toggleValue = <T extends string>(key: keyof FilterState, value: T) => {
-    const existing = (filters[key] as T[]) || [];
-    const next = existing.includes(value) ? existing.filter((item) => item !== value) : [...existing, value];
-    onUpdate({ [key]: next } as Partial<FilterState>);
+  const toggleValue = <K extends ArrayFilterKey>(key: K, value: FilterState[K][number]) => {
+    const existing = filters[key] as FilterState[K] & unknown[];
+    const next = (existing.includes(value)
+      ? existing.filter((item) => item !== value)
+      : [...existing, value]) as FilterState[K];
+    onUpdate(key, next);
   };
 
-  const setSize = (value: number | null) => onUpdate({ size: value });
+  const setSize = (value: number | null) => onUpdate("size", value);
 
   return (
     <div className={styles.panel} aria-labelledby="filters-heading">
@@ -105,13 +109,13 @@ export default function FilterPanel({
                   type="search"
                   placeholder="Search pieces, codes, palettes"
                   value={filters.query}
-                  onChange={(event) => onUpdate({ query: event.target.value })}
+                  onChange={(event) => onUpdate("query", event.target.value)}
                 />
               </label>
 
               <label className={styles.field}>
                 <span>Sort</span>
-                <select value={filters.sort} onChange={(event) => onUpdate({ sort: event.target.value as SortOption })}>
+                <select value={filters.sort} onChange={(event) => onUpdate("sort", event.target.value as SortOption)}>
                   <option value="featured">Featured sequence</option>
                   <option value="price-asc">Price — Ascending</option>
                   <option value="price-desc">Price — Descending</option>
@@ -149,7 +153,7 @@ export default function FilterPanel({
                   <Checkbox
                     label="Only show in-stock"
                     checked={filters.inStockOnly}
-                    onChange={() => onUpdate({ inStockOnly: !filters.inStockOnly })}
+                    onChange={() => onUpdate("inStockOnly", !filters.inStockOnly)}
                   />
                 </FilterGroup>
               </div>
@@ -203,7 +207,7 @@ export default function FilterPanel({
                       min={priceBounds.min}
                       max={priceBounds.max}
                       value={filters.maxPrice}
-                      onChange={(event) => onUpdate({ maxPrice: Number(event.target.value) })}
+                      onChange={(event) => onUpdate("maxPrice", Number(event.target.value))}
                     />
                     <div className={styles.sliderMeta}>
                       <span>{priceBounds.min}€</span>
