@@ -2,6 +2,7 @@
 @use "@/styles/mixins" as *;
 
 .hero {
+  --accent-glow: 0 22px 38px -18px rgba(229, 57, 69, 0.65);
   position: relative;
   overflow: hidden;
   margin-top: $space-2xl;

@@ -31,6 +31,7 @@ interface FilterPanelProps {
 }
 
 type ArrayFilterKey = "categories" | "materials" | "tones" | "styles" | "heelHeights";
+type ArrayFilterValue<K extends ArrayFilterKey> = FilterState[K] extends (infer U)[] ? U : never;
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -63,15 +64,20 @@ export default function FilterPanel({
     [filters, priceBounds.max],
   );
 
-  const toggleValue = <K extends ArrayFilterKey>(key: K, value: FilterState[K][number]) => {
-    const existing = filters[key] as FilterState[K] & unknown[];
-    const next = (existing.includes(value)
-      ? existing.filter((item) => item !== value)
-      : [...existing, value]) as FilterState[K];
-    onUpdate(key, next);
+  const toggleFilterValue = <K extends ArrayFilterKey>(key: K, value: FilterState[K][number]) => {
+    const list = new Set<ArrayFilterValue<K>>(filters[key] as ArrayFilterValue<K>[]);
+    const normalized = value as ArrayFilterValue<K>;
+
+    if (list.has(normalized)) {
+      list.delete(normalized);
+    } else {
+      list.add(normalized);
+    }
+
+    onUpdate(key, Array.from(list) as FilterState[K]);
   };
 
-  const setSize = (value: number | null) => onUpdate("size", value);
+  const setSizeFilter = (value: number | null) => onUpdate("size", value);
 
   return (
     <div className={styles.panel} aria-labelledby="filters-heading">
@@ -133,7 +139,7 @@ export default function FilterPanel({
                       key={category}
                       label={category}
                       checked={filters.categories.includes(category)}
-                      onChange={() => toggleValue("categories", category)}
+                      onChange={() => toggleFilterValue("categories", category)}
                     />
                   ))}
                 </FilterGroup>
@@ -144,7 +150,7 @@ export default function FilterPanel({
                       key={height}
                       label={height}
                       checked={filters.heelHeights.includes(height)}
-                      onChange={() => toggleValue("heelHeights", height)}
+                      onChange={() => toggleFilterValue("heelHeights", height)}
                     />
                   ))}
                 </FilterGroup>
@@ -165,7 +171,7 @@ export default function FilterPanel({
                       key={material}
                       label={material}
                       checked={filters.materials.includes(material)}
-                      onChange={() => toggleValue("materials", material)}
+                      onChange={() => toggleFilterValue("materials", material)}
                     />
                   ))}
                 </FilterGroup>
@@ -176,7 +182,7 @@ export default function FilterPanel({
                       key={style}
                       label={style}
                       checked={filters.styles.includes(style)}
-                      onChange={() => toggleValue("styles", style)}
+                      onChange={() => toggleFilterValue("styles", style)}
                     />
                   ))}
                 </FilterGroup>
@@ -191,7 +197,7 @@ export default function FilterPanel({
                           filters.tones.includes(tone.id) ? styles.swatchActive : ""
                         }`}
                         aria-pressed={filters.tones.includes(tone.id)}
-                        onClick={() => toggleValue("tones", tone.id)}
+                        onClick={() => toggleFilterValue("tones", tone.id)}
                         aria-label={tone.label}
                       />
                     ))}
@@ -224,7 +230,7 @@ export default function FilterPanel({
                         key={size}
                         type="button"
                         className={`${styles.size} ${filters.size === size ? styles.sizeActive : ""}`}
-                        onClick={() => setSize(filters.size === size ? null : size)}
+                        onClick={() => setSizeFilter(filters.size === size ? null : size)}
                         aria-pressed={filters.size === size}
                       >
                         {size}

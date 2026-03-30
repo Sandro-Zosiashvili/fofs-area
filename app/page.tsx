@@ -234,7 +234,7 @@ export default function Home() {
     sort: "featured",
   });
 
-  // priceBounds is module-level and static
+  // priceBounds is a module-level constant derived once from the static product array
   const activeFiltersCount = useMemo(() => {
     const counts = [
       filters.query ? 1 : 0,
@@ -247,7 +247,7 @@ export default function Home() {
       filters.inStockOnly ? 1 : 0,
       filters.maxPrice < priceBounds.max ? 1 : 0,
     ];
-    return counts.reduce((total, val) => total + (val || 0), 0);
+    return counts.reduce((total, val) => total + val, 0);
   }, [filters]);
 
   const filteredProducts = useMemo(() => {
@@ -264,8 +264,8 @@ export default function Home() {
       if (filters.inStockOnly && !product.inStock) return false;
       if (!normalizedQuery) return true;
 
-      const haystack = `${product.name} ${product.collection} ${product.description} ${product.tags.join(" ")}`.toLowerCase();
-      return haystack.includes(normalizedQuery);
+      const searchableContent = `${product.name} ${product.collection} ${product.description} ${product.tags.join(" ")}`.toLowerCase();
+      return searchableContent.includes(normalizedQuery);
     });
 
     return matches.sort(sorters[filters.sort]);

@@ -8,6 +8,8 @@ interface HeroProps {
   subheading: string;
 }
 
+const ACCENT_GLOW = "var(--accent-glow)";
+
 export default function Hero({ heading, subheading }: HeroProps) {
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
@@ -33,7 +35,7 @@ export default function Hero({ heading, subheading }: HeroProps) {
             <motion.a
               href="#collections"
               className={styles.ctaPrimary}
-              whileHover={{ y: -2, boxShadow: "0 22px 38px -18px rgba(229,57,69,0.65)" }}
+              whileHover={{ y: -2, boxShadow: ACCENT_GLOW }}
               whileTap={{ scale: 0.98 }}
             >
               Explore the atelier
