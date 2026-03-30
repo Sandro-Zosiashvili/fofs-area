@@ -4,40 +4,54 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "./ProductCard.module.scss";
 
-type SwatchTone = "charcoal" | "bone" | "sage" | "taupe" | "espresso";
+export type SwatchTone = "crimson" | "graphite" | "pearl" | "umber" | "onyx" | "sage" | "ember";
 
-interface ProductCardProps {
+export interface ProductCardProps {
+  id: string;
   name: string;
-  price: string;
+  collection: string;
+  description: string;
+  priceLabel: string;
   imageSrc: string;
   imageAlt: string;
-  colorSwatches?: SwatchTone[];
-  availableSizes?: number[];
-  onSave?: () => void;
+  colors: SwatchTone[];
+  sizes: number[];
+  tags: string[];
+  badge?: string;
+  inStock: boolean;
+  onSave?: (id: string) => void;
 }
 
 const swatchClassMap: Record<SwatchTone, string> = {
-  charcoal: styles.swatchCharcoal,
-  bone: styles.swatchBone,
+  crimson: styles.swatchCrimson,
+  graphite: styles.swatchGraphite,
+  pearl: styles.swatchPearl,
+  umber: styles.swatchUmber,
+  onyx: styles.swatchOnyx,
   sage: styles.swatchSage,
-  taupe: styles.swatchTaupe,
-  espresso: styles.swatchEspresso,
+  ember: styles.swatchEmber,
 };
 
 export default function ProductCard({
+  id,
   name,
-  price,
+  collection,
+  description,
+  priceLabel,
   imageSrc,
   imageAlt,
-  colorSwatches,
-  availableSizes,
+  colors,
+  sizes,
+  tags,
+  badge,
+  inStock,
   onSave,
 }: ProductCardProps) {
   return (
     <motion.article
       className={styles.card}
-      whileHover={{ y: -4, scale: 1.01 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      whileHover={{ y: -6, scale: 1.01 }}
+      transition={{ duration: 0.24, ease: "easeOut" }}
     >
       <div className={styles.imageWrap}>
         <Image
@@ -45,22 +59,30 @@ export default function ProductCard({
           alt={imageAlt}
           fill
           className={styles.image}
-          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+          sizes="(min-width: 1280px) 22vw, (min-width: 1024px) 28vw, (min-width: 768px) 45vw, 100vw"
+          priority
         />
-        <button type="button" className={styles.saveButton} onClick={onSave}>
-          Save
-        </button>
+        {badge ? <span className={styles.badge}>{badge}</span> : null}
+        <div className={styles.topActions}>
+          <button type="button" className={styles.saveButton} onClick={() => onSave?.(id)}>
+            Save
+          </button>
+          <span className={`${styles.chip} ${inStock ? styles.chipPositive : styles.chipNeutral}`}>
+            {inStock ? "In stock" : "Made to order"}
+          </span>
+        </div>
       </div>
 
       <div className={styles.details}>
-        <div>
+        <div className={styles.titleBlock}>
+          <p className={styles.collection}>{collection}</p>
           <h3 className={styles.name}>{name}</h3>
-          <p className={styles.price}>{price}</p>
+          <p className={styles.description}>{description}</p>
         </div>
-
-        {colorSwatches?.length ? (
+        <div className={styles.meta}>
+          <p className={styles.price}>{priceLabel}</p>
           <div className={styles.swatches} aria-label={`${name} available colors`}>
-            {colorSwatches.map((swatch) => (
+            {colors.map((swatch) => (
               <span
                 key={`${name}-${swatch}`}
                 className={`${styles.swatch} ${swatchClassMap[swatch]}`}
@@ -69,26 +91,37 @@ export default function ProductCard({
               />
             ))}
           </div>
-        ) : null}
+        </div>
       </div>
 
-      {availableSizes?.length ? (
-        <div className={styles.sizes}>
-          <p className={styles.sizeLabel}>EU Sizes</p>
+      <div className={styles.tags}>
+        {tags.map((tag) => (
+          <span key={`${id}-${tag}`} className={styles.tag}>
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <div className={styles.footer}>
+        <div className={styles.sizeBlock}>
+          <p className={styles.sizeLabel}>EU sizes</p>
           <div className={styles.sizeOptions}>
-            {availableSizes.map((size) => (
-              <button
-                key={`${name}-size-${size}`}
-                type="button"
-                className={styles.sizeOption}
-                aria-label={`Select size ${size}`}
-              >
+            {sizes.map((size) => (
+              <button key={`${id}-size-${size}`} type="button" className={styles.sizeOption}>
                 {size}
               </button>
             ))}
           </div>
         </div>
-      ) : null}
+        <div className={styles.actions}>
+          <button type="button" className={styles.secondary}>
+            View spec
+          </button>
+          <button type="button" className={styles.primary}>
+            Add to bag
+          </button>
+        </div>
+      </div>
     </motion.article>
   );
 }

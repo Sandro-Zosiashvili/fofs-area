@@ -3,14 +3,16 @@
 
 .card {
   @include flex-column(flex-start, stretch, $space-md);
-  border-radius: $radius-md;
-  padding: $space-sm;
-  background-color: rgba(255, 255, 255, 0.38);
+  border-radius: $radius-lg;
+  padding: $space-md;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  border: 1px solid $color-border;
   box-shadow: $shadow-soft;
-  transition: box-shadow 260ms ease, opacity 260ms ease;
+  transition: box-shadow 260ms ease, border-color 220ms ease, transform 220ms ease;
 
   &:hover {
-    box-shadow: 0 22px 45px -30px rgba(17, 19, 18, 0.24);
+    border-color: $color-border-strong;
+    box-shadow: $shadow-strong;
   }
 }
 
@@ -19,7 +21,8 @@
   aspect-ratio: 4 / 5;
   border-radius: $radius-md;
   overflow: hidden;
-  background-color: $color-bone-100;
+  background: $color-surface;
+  isolation: isolate;
 }
 
 .image {
@@ -27,46 +30,108 @@
   transition: transform 320ms ease, opacity 320ms ease;
 
   .card:hover & {
-    transform: scale(1.03);
-    opacity: 0.92;
+    transform: scale(1.035);
+    opacity: 0.94;
   }
 }
 
-.saveButton {
+.badge {
+  position: absolute;
+  bottom: $space-sm;
+  left: $space-sm;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: $color-ink;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  backdrop-filter: blur(6px);
+}
+
+.topActions {
   position: absolute;
   top: $space-sm;
   right: $space-sm;
-  border: 0;
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+}
+
+.saveButton {
+  border: 1px solid $color-border;
   border-radius: 999px;
-  padding: $space-2xs $space-sm;
-  background-color: rgba(245, 242, 235, 0.86);
-  color: $color-charcoal-950;
-  font-size: 0.76rem;
-  letter-spacing: 0.04em;
-  transition: background-color 200ms ease;
+  padding: 0.4rem 0.8rem;
+  background: rgba(10, 12, 20, 0.72);
+  color: $color-ink;
+  font-size: 0.86rem;
   cursor: pointer;
+  transition: background-color 200ms ease, border-color 200ms ease;
 
   &:hover,
   &:focus-visible {
-    background-color: rgba(238, 234, 223, 0.98);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: $color-border-strong;
   }
+}
+
+.chip {
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  color: $color-ink;
+}
+
+.chipPositive {
+  background: linear-gradient(135deg, rgba(71, 209, 162, 0.2), rgba(71, 209, 162, 0.08));
+  border: 1px solid rgba(71, 209, 162, 0.35);
+}
+
+.chipNeutral {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid $color-border;
 }
 
 .details {
   @include flex-row(space-between, flex-start, $space-md);
+  flex-wrap: wrap;
+  gap: $space-sm;
+}
+
+.titleBlock {
+  @include flex-column(flex-start, flex-start, $space-2xs);
+  max-width: 75%;
+}
+
+.collection {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: $color-subtle;
+  font-size: 0.82rem;
 }
 
 .name {
   font-family: $font-heading;
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: $color-charcoal-950;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: $color-ink;
+}
+
+.description {
+  color: $color-muted;
+  margin-top: $space-2xs;
+}
+
+.meta {
+  @include flex-column(flex-end, flex-end, $space-xs);
+  align-items: flex-end;
 }
 
 .price {
-  margin-top: $space-2xs;
-  color: $color-muted;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
+  color: $color-ink;
+  font-weight: 700;
 }
 
 .swatches {
@@ -77,40 +142,68 @@
   width: 0.85rem;
   height: 0.85rem;
   border-radius: 999px;
-  border: 1px solid rgba(17, 19, 18, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
-.swatchCharcoal {
-  background-color: #2d3130;
+.swatchCrimson {
+  background: linear-gradient(135deg, #c1121f, #e53945);
 }
 
-.swatchBone {
-  background-color: #d8d1bf;
+.swatchGraphite {
+  background: #2c323f;
+}
+
+.swatchPearl {
+  background: linear-gradient(135deg, #f4f4f5, #cfd3dd);
+}
+
+.swatchUmber {
+  background: #7b5b46;
+}
+
+.swatchOnyx {
+  background: #0c0f16;
 }
 
 .swatchSage {
-  background-color: #4f635c;
+  background: #4b6057;
 }
 
-.swatchTaupe {
-  background-color: #9b8d7f;
+.swatchEmber {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
 }
 
-.swatchEspresso {
-  background-color: #4b3426;
+.tags {
+  @include flex-row(flex-start, center, $space-2xs);
+  flex-wrap: wrap;
 }
 
-.sizes {
+.tag {
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $color-border;
+  color: $color-ink;
+  font-size: 0.85rem;
+}
+
+.footer {
+  @include flex-row(space-between, flex-start, $space-md);
+  gap: $space-md;
+  flex-wrap: wrap;
+}
+
+.sizeBlock {
   @include flex-column(flex-start, flex-start, $space-xs);
-  padding-top: $space-xs;
-  border-top: 1px solid $color-divider;
+  min-width: 180px;
 }
 
 .sizeLabel {
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: $color-muted;
+  color: $color-subtle;
 }
 
 .sizeOptions {
@@ -119,16 +212,61 @@
 }
 
 .sizeOption {
-  border: 1px solid $color-divider;
+  border: 1px solid $color-border;
   border-radius: 999px;
-  background-color: transparent;
-  color: $color-charcoal-900;
-  padding: 0.18rem 0.58rem;
-  font-size: 0.8rem;
-  transition: background-color 180ms ease;
+  background: rgba(255, 255, 255, 0.02);
+  color: $color-ink;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
 
   &:hover,
   &:focus-visible {
-    background-color: rgba(47, 61, 56, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: $color-border-strong;
+    transform: translateY(-1px);
+  }
+}
+
+.actions {
+  @include flex-row(flex-end, center, $space-sm);
+}
+
+.primary,
+.secondary {
+  border-radius: $radius-md;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.92rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.primary {
+  background: linear-gradient(135deg, $color-accent, $color-accent-strong);
+  color: $color-ink-strong;
+  box-shadow:
+    0 16px 32px -14px rgba(229, 57, 69, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-2px);
+    box-shadow:
+      0 22px 42px -16px rgba(229, 57, 69, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+.secondary {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: $color-border;
+  color: $color-ink;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-border-strong;
+    transform: translateY(-1px);
   }
 }
