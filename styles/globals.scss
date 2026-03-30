@@ -13,7 +13,10 @@ body {
 
 body {
   color: $color-ink;
-  background-color: $color-bone-50;
+  background:
+    radial-gradient(circle at 12% 18%, $color-glow-1, transparent 32%),
+    radial-gradient(circle at 82% 12%, $color-glow-2, transparent 28%),
+    $color-bg;
   font-family: $font-body;
   line-height: 1.6;
   text-rendering: optimizeLegibility;

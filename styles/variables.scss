@@ -1,17 +1,24 @@
-$color-sage-900: #2f3d38;
-$color-sage-800: #3d4f49;
-$color-charcoal-950: #111312;
-$color-charcoal-900: #181b1a;
-$color-bone-50: #f5f2eb;
-$color-bone-100: #eeeadf;
-$color-ink: #222625;
-$color-muted: #646a67;
-$color-divider: rgba(24, 27, 26, 0.12);
-$color-card-shadow: rgba(17, 19, 18, 0.08);
-$color-hero-gradient-start: rgba(47, 61, 56, 0.16);
-$color-hero-gradient-end: rgba(17, 19, 18, 0.08);
+$color-bg: #05070b;
+$color-surface: #0b0f16;
+$color-panel: #101624;
+$color-elevated: #151c2d;
+$color-charcoal-950: #0f131d;
+$color-charcoal-900: #121827;
+$color-ink: #e8edf7;
+$color-ink-strong: #f7f8fb;
+$color-muted: #9aa2b9;
+$color-subtle: #7d859b;
+$color-border: rgba(255, 255, 255, 0.08);
+$color-border-strong: rgba(255, 255, 255, 0.14);
+$color-accent: #e53945;
+$color-accent-strong: #ff4d5a;
+$color-amber: #f6b76f;
+$color-emerald: #47d1a2;
+$color-slate: #1f2937;
+$color-glow-1: rgba(229, 57, 69, 0.16);
+$color-glow-2: rgba(71, 209, 162, 0.12);
 
-$font-heading: "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+$font-heading: "Inter Tight", "Inter", "Helvetica Neue", Arial, sans-serif;
 $font-body: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $space-2xs: 0.25rem;
@@ -28,7 +35,8 @@ $radius-sm: 0.5rem;
 $radius-md: 0.75rem;
 $radius-lg: 1.5rem;
 
-$shadow-soft: 0 18px 42px -28px $color-card-shadow;
+$shadow-soft: 0 18px 52px -26px rgba(3, 6, 14, 0.6);
+$shadow-strong: 0 22px 70px -18px rgba(0, 0, 0, 0.65);
 
 $z-base: 1;
 $z-sticky: 100;
